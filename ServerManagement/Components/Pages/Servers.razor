@@ -1,5 +1,5 @@
 ﻿@page "/servers"
-
+@rendermode InteractiveServer
 @inject NavigationManager NavigationManager
 
 <h3>Servers</h3>
@@ -11,10 +11,10 @@
 		@foreach (var city in cities)
 		{
 			<div class="col">
-				<div class="card">
+				<div class="card @(selectedCity.Equals(city, StringComparison.OrdinalIgnoreCase) ? "border-primary" : "")">
 					<img src="@($"/images/{city}.png")" class="card-img-top" alt="...">
 					<div class="card-body">
-						<button typr="button" class="btn btn-primary">@city</button>
+						<button typr="button" class="btn btn-primary" @onclick="@(() => { SelectCity(city); })">@city</button>
 					</div>
 				</div>
 			</div>
@@ -22,13 +22,18 @@
 	</div>
 </div>
 <br />
-<ServerComponent></ServerComponent>
+<div class="input-group mb-3">
+	<input type="text" class="form-control" placeholder="Search Servers"
+		   @bind-value="serverFilter"
+		   @bind-value:event="oninput" />
+	<button class="btn btn-outline-secondary" type="button" id="button-search" @onclick="HandleSearch">Search</button>
+</div>
+@serverFilter
 <br />
 
 <ul>
-	@foreach (var server in servers)
-	{
-		<li>
+	<Virtualize Items="this.servers" Context="server">
+		<li @key="server.ServerId">
 			@server.Name in @server.City is
 			<span style="color:@(server.IsOnline ? "green" : "red")">
 				@(server.IsOnline ? "online" : "offline")
@@ -42,7 +47,7 @@
 				<button type="submit" class="btn btn-primary">Delete</button>
 			</EditForm>
 		</li>
-	}
+	</Virtualize>
 </ul>
 <p>
 	<a href="/servers/add" class="btn btn-primary">Add Server</a>
@@ -54,6 +59,19 @@
 
 	private List<String> cities = CityRepository.GetCities();
 
+	private string selectedCity = "Toronto";
+
+	private string _serverFilter = "";
+	private string serverFilter
+	{
+		get => _serverFilter; set
+		{
+			_serverFilter = value;
+			//do whatever you want
+			servers = ServersRepository.SearchServers(_serverFilter);
+		}
+	}
+
 	private void DeleteServer(int serverId)
 	{
 		if (serverId > 0)
@@ -63,4 +81,16 @@
 		}
 	}
 
+	private void SelectCity(string cityName)
+	{
+		this.selectedCity = cityName;
+		servers = ServersRepository.GetServersByCity(this.selectedCity);
+
+	}
+
+	private void HandleSearch(MouseEventArgs args)
+	{
+		servers = ServersRepository.SearchServers(serverFilter);
+		this.selectedCity = string.Empty;
+	}
 }

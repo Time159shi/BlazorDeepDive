@@ -3,6 +3,16 @@
 
 
 
+
+# 
+if (cityName == "Halifax")
+{
+	for (int i = 16; i < 2000; i++)
+	{
+		servers.Add(new Server { ServerId = i, Name = $"Server{i}", City = "Halifaxss" });
+	}
+}
+
 <p>
 	@* @status at @DateTime.Now *@
 	@* @server.Name is in @server.City *@
