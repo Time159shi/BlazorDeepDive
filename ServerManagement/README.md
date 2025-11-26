@@ -1,7 +1,16 @@
 ﻿
 
 
+# Reference a child component
+# Assignment 6: Componentize the search bar
+# Assignment 5:Extract the Server Compnent
+# Component Parameters
+# Thinking Component
 # To-Do List
+Display a list of tasks
+Add Task
+Input task
+Mark task as completed
 # Use Viretualzation to improve list-rendering performance 使用虚拟化来提高列表渲染性能
 foreach 
 与很多下栏目需要渲染
