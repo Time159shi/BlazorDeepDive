@@ -8,21 +8,26 @@
 <CityListComponent @ref="cityListComponent" SelectCityCallBack="HandleCitySelection"></CityListComponent>
 <br />
 
-<SearchBarComponent @ref="searchBarComponent" SearchServerCallback="HandleSearchServer"></SearchBarComponent>
+<SearchBarComponent @ref="searchBarComponent" SearchServerCallback="HandleSearchServer"
+					style="width:1000px"
+					data-my-attribute="my data">
+</SearchBarComponent>
 
 <br />
-<ServerListComponent @rendermode="InteractiveServer"
-					 CityName="@this.selectCity"
-					 SearchFilter="@this.searchFilter">
-</ServerListComponent>
 
+<CascadingValue Name="SelectedCity" Value="@selectedCity">
+	<ServerListComponent @rendermode="InteractiveServer"
+						 CityName="@this.selectedCity"
+						 SearchFilter="@this.searchFilter">
+	</ServerListComponent>
+</CascadingValue>
 <p>
 	<a href="/servers/add" class="btn btn-primary">Add Server</a>
 </p>
 
 @code {
 
-	private string selectCity = "Tronto";
+	private string selectedCity = "Tronto";
 	private string searchFilter = "";
 
 	private CityListComponent? cityListComponent;
@@ -35,7 +40,7 @@
 	}
 	private void HandleCitySelection(string cityName)
 	{
-		selectCity = cityName;
+		selectedCity = cityName;
 		this.searchFilter = "";
 		searchBarComponent?.ClearFilter();
 	}

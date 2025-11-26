@@ -1,6 +1,10 @@
 ﻿
 
 
+# Use arbitrary attributes to provide flexibility 使用任意属性提供灵活性
+# Templated Components
+# Cascading Parameter 级联参数
+# CSS Isolation
 # Reference a child component
 # Assignment 6: Componentize the search bar
 # Assignment 5:Extract the Server Compnent
