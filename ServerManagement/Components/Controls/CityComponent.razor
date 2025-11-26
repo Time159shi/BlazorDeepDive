@@ -19,8 +19,41 @@
 	private void SelectCity(string cityName)
 	{
 		SelectCityCallBack.InvokeAsync(cityName);
-		// Optionally, you can invoke an event callback to notify the parent component
-		// CitySelected.InvokeAsync(cityName);
+	}
+
+	protected override bool ShouldRender()
+	{
+		var guid = Guid.NewGuid();
+		Console.WriteLine($"{this.GetType().Name}: {nameof(ShouldRender)} : {guid}");
+		return base.ShouldRender();
+	}
+
+	protected override Task OnParametersSetAsync()
+	{
+		var guid = Guid.NewGuid();
+		Console.WriteLine($"{this.GetType().Name}: {nameof(OnParametersSetAsync)} : {guid}");
+		return base.OnParametersSetAsync();
+	}
+
+	protected override void OnParametersSet()
+	{
+		base.OnParametersSet();
+		var guid = Guid.NewGuid();
+		Console.WriteLine($"{this.GetType().Name}: {nameof(OnParametersSet)} : {guid}");
+	}
+
+	protected override void OnAfterRender(bool firstRender)
+	{
+		var guid = Guid.NewGuid();
+		Console.WriteLine($"{this.GetType().Name}: {nameof(OnAfterRender)} : {guid}");
+		base.OnAfterRender(firstRender);
+	}
+
+	public void Dispose()
+	{
+		var guid = Guid.NewGuid();
+		Console.WriteLine($"{this.GetType().Name}: {nameof(Dispose)} : {guid}");
+
 	}
 
 }

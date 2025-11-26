@@ -1,6 +1,11 @@
 ﻿
 
-
+# Component Lifecycle Overview
+Construct
+Initialize
+Receive Parameter
+Render
+Destruct
 # Use arbitrary attributes to provide flexibility 使用任意属性提供灵活性
 # Templated Components
 # Cascading Parameter 级联参数
