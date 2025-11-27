@@ -1,10 +1,15 @@
 using ServerManagement.Components;
+using ServerManagement.StatesStore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents().
     AddInteractiveServerComponents();
+
+builder.Services.AddTransient<SessionStorage>();
+builder.Services.AddScoped<ContainerStorage>();//作用域生命周期
+builder.Services.AddScoped<TorontoOnlineServerStore>();
 
 var app = builder.Build();
 

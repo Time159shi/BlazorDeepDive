@@ -1,7 +1,9 @@
 ﻿@page "/servers"
 @page "/servers/back_from/{cityName}"
+
 @rendermode InteractiveServer
 @inject NavigationManager NavigationManager
+@inject TorontoOnlineServerStore TorontoOnlineServerStore
 
 <h3>Servers</h3>
 <br />
@@ -63,6 +65,12 @@
 			{
 				selectedCity = CityName;
 				StateHasChanged();
+			}
+			//初始化在线服务器数量
+			var serversToronto = ServersRepository.GetServersByCity("Toronto");
+			if (serversToronto is not null)
+			{
+				TorontoOnlineServerStore.SetNumberServerOnline(serversToronto.Count(x => x.IsOnline));
 			}
 		}
 	}

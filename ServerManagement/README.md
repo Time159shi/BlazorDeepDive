@@ -1,5 +1,8 @@
 ﻿
 
+# Use Observer pattern to access states across component trees
+# Use DI container to maintain states
+# Use browser storage to maintain states
 # 86.Use URL to pass info across routable component
 # 85.State Management Overview 状态管理
 # 84.Qurey Strings 查询字符串

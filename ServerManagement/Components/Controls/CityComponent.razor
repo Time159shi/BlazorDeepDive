@@ -1,20 +1,37 @@
-﻿
+﻿@implements IDisposable
+
+@inject TorontoOnlineServerStore TorontoOnlineServerStore
+
+
 <div class="col">
 	<div class="card @(selectedCity.Equals(city, StringComparison.OrdinalIgnoreCase) ? "border-primary" : "")">
 		<img src="@($"/images/{city}.png")" class="card-img-top" alt="...">
 		<div class="card-body">
 			<button typr="button" class="btn btn-primary" @onclick="@(() => { SelectCity(city); })">@city</button>
 		</div>
+		<div>
+
+			@switch (city)
+			{
+				case "Toronto":
+					<text>@numberServerOnlineToronto</text>
+					break;
+				default:
+					break;
+			}
+
+		</div>
 	</div>
 </div>
 
 @code {
+	private int numberServerOnlineToronto;
 	[Parameter]
 	public string selectedCity { get; set; } = "Toronto";
 	[Parameter]
 	public string city { get; set; } = "";
 	[Parameter]
-	public EventCallback<string> SelectCityCallBack{ get; set; }
+	public EventCallback<string> SelectCityCallBack { get; set; }
 
 	private void SelectCity(string cityName)
 	{
@@ -44,16 +61,31 @@
 
 	protected override void OnAfterRender(bool firstRender)
 	{
-		var guid = Guid.NewGuid();
-		Console.WriteLine($"{this.GetType().Name}: {nameof(OnAfterRender)} : {guid}");
-		base.OnAfterRender(firstRender);
+		if (firstRender)
+		{
+			numberServerOnlineToronto = TorontoOnlineServerStore.GetNumberServerOnline();
+			TorontoOnlineServerStore.AddStateChangeListeners(OnTorontoServersStatusChange);
+			StateHasChanged();
+		}
+	}
+
+	private void OnTorontoServersStatusChange()
+	{
+		numberServerOnlineToronto = TorontoOnlineServerStore.GetNumberServerOnline();
+		StateHasChanged();
 	}
 
 	public void Dispose()
 	{
-		var guid = Guid.NewGuid();
-		Console.WriteLine($"{this.GetType().Name}: {nameof(Dispose)} : {guid}");
-
+		@switch (city)
+		{
+			case "Toronto":
+				TorontoOnlineServerStore.RemoveStateChangeListeners(OnTorontoServersStatusChange);
+				break;
+			default:
+				break;
+		}
+		
 	}
 
 }
