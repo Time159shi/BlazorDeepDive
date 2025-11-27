@@ -1,5 +1,17 @@
 ﻿
 
+# 83.Option Parameter
+# 82.Multiple Page Directives 多个页面指令
+# 81.Use NavigatinLock t prevent navigation
+# Static vs Interactive Routing
+# Thread Safety & SynchronizationContext for server interactivity 线程安全性与交互上下文
+# When does a component render/re-render 什么时候组件渲染
+1 when component is created for the first time
+2 when events are triggered
+3 when parameters are changed
+4 when StateHasChanged is called
+# The problem with OnParameterSet
+# The problem component initialization
 # Component Lifecycle Overview
 Construct
 Initialize

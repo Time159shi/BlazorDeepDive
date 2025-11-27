@@ -5,31 +5,32 @@
 <table class="table table-striped">
 	<RepeaterComponent Items="servers">
 		<Header>
-			<thead>
-				<tr>
-					<th>
-						Name
-					</th>
-					<th>
-						City
-					</th>
-					<th>
-						Status
-					</th>
-					<th>
-						People Online
-					</th>
-					<th></th>
-					<th></th>
-				</tr>
-			</thead>
+		<thead>
+			<tr>
+				<th>
+					Name
+				</th>
+				<th>
+					City
+				</th>
+				<th>
+					Status
+				</th>
+				<th>
+					People Online
+				</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
 		</Header>
 		<Row Context="server">
 			<ServerComponent Server="server"></ServerComponent>
 		</Row>
 	</RepeaterComponent>
-
 </table>
+<br />
+<button type="button" class="btn btn-primary" @onclick="@(() => { })">ReFresh</button>
 
 @code {
 	[Parameter]
@@ -38,6 +39,27 @@
 	public string SearchFilter { get; set; } = "";
 
 	private List<Server>? servers;
+
+	private System.Threading.Timer? Timer;
+
+	public override Task SetParametersAsync(ParameterView parameters)
+	{
+		if (parameters.TryGetValue<string>("CityName", out var cityName))
+		{
+			if (cityName != this.CityName)
+			{
+				base.SetParametersAsync(parameters);
+			}
+		}
+		if (parameters.TryGetValue<string>("SearchFilter", out var searchFilter))
+		{
+			if (searchFilter != this.SearchFilter)
+			{
+				base.SetParametersAsync(parameters);
+			}
+		}
+		return Task.CompletedTask;
+	}
 
 	protected override void OnParametersSet()
 	{
@@ -49,7 +71,55 @@
 		{
 			servers = ServersRepository.SearchServers(this.SearchFilter);
 		}
+	}
 
+	protected override bool ShouldRender()
+	{
+		var guid = Guid.NewGuid();
+		Console.WriteLine($"{this.GetType().Name}: {nameof(ShouldRender)} : {guid}");
+		return base.ShouldRender();
+	}
+
+	protected override Task OnParametersSetAsync()
+	{
+		var guid = Guid.NewGuid();
+		Console.WriteLine($"{this.GetType().Name}: {nameof(OnParametersSetAsync)} : {guid}");
+		return base.OnParametersSetAsync();
+	}
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+		var guid = Guid.NewGuid();
+		Console.WriteLine($"{this.GetType().Name}: {nameof(OnParametersSet)} : {guid}");
+	}
+
+	protected override void OnAfterRender(bool firstRender)
+	{
+		base.OnAfterRender(firstRender);
+		if (firstRender)
+		{
+			if (string.IsNullOrEmpty(this.SearchFilter))
+			{
+				servers = ServersRepository.GetServersByCity(CityName ?? "Toronto");
+			}
+			else
+			{
+				servers = ServersRepository.SearchServers(this.SearchFilter);
+			}
+			Timer = new System.Threading.Timer(_ =>
+			{
+				base.InvokeAsync(StateHasChanged);
+			}, null, 2000, 2000);
+		}
+		var guid = Guid.NewGuid();
+		Console.WriteLine($"{this.GetType().Name}: {nameof(OnAfterRender)} : {guid}");
+	}
+
+	public void Dispose()
+	{
+		var guid = Guid.NewGuid();
+		Console.WriteLine($"{this.GetType().Name}: {nameof(Dispose)} : {guid}");
 
 	}
 
