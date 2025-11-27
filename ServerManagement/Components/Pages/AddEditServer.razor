@@ -1,23 +1,26 @@
-﻿@page "/servers/{id:int}"
-
-
-@inject IJSRuntime JSRuntime
+﻿@page "/server/{id:int?}"
 
 @inject NavigationManager NavigationManager
 
-<NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation"
-	ConfirmExternalNavigation="true"></NavigationLock>
+@if (Id.HasValue)
+{
+	<h3>Edit Server</h3>
+}
+else
+{
+	<h3>Add Server</h3>
+}
 
-<h3>Edit Server</h3>
-<br />
-<br />
 @if (server != null)
 {
 	<EditForm Model="server" FormName="formServer" OnValidSubmit="Submit">
 		<DataAnnotationsValidator></DataAnnotationsValidator>
 		<ValidationSummary></ValidationSummary>
 
-		<InputNumber @bind-Value="server.ServerId" hidden></InputNumber>
+		@if (server.ServerId > 0)
+		{
+			<InputNumber @bind-Value="server.ServerId" hidden></InputNumber>
+		}
 
 		<FieldComponent Label="Name">
 			<Control>
@@ -44,43 +47,47 @@
 		</FieldComponent>
 
 		<br />
-		<button class="btn btn-primary" type="submit">Update</button>
+		@if (server.ServerId > 0)
+		{
+			<button class="btn btn-primary" type="submit">Update</button>
+		}
+		else
+		{
+			<button class="btn btn-primary" type="submit">Save</button>
+		}
 		&nbsp;
 		<a href="/servers" class="btn btn-primary">Close</a>
 	</EditForm>
 }
 <br />
 
-
-
 @code {
 	[Parameter]
-	public int Id { get; set; }
+	public int? Id { get; set; }
+
+	// [SupplyParameterFromQuery]
+	// public string? City { get; set; }
 
 	[SupplyParameterFromForm]
 	private Server? server { get; set; }
 
-	//生命周期事件
 	protected override void OnParametersSet()
 	{
-		//base.OnParametersSet();
-		server ??= ServersRepository.GetServerById(this.Id);
+		if (this.Id.HasValue)
+			server ??= ServersRepository.GetServerById(this.Id.Value);
+		else
+			server ??= new Server() { IsOnline = false };
+		
 	}
 	private void Submit()
 	{
 		if (server != null)
 		{
-			ServersRepository.UpdateServer(server.ServerId, server);
+			if (this.Id.HasValue)
+				ServersRepository.UpdateServer(server.ServerId, server);
+			else
+				ServersRepository.AddServer(server);
 		}
-		// NavigationManager.NavigateTo("/servers");
 		NavigationManager.NavigateTo($"/servers/back_from/{this.server?.City}");
-	}
-	private async Task OnBeforeInternalNavigation(LocationChangingContext context)
-	{
-		var isConfirmed = await JSRuntime.InvokeAsync<bool>("confirm","Are you sure you want to leave this page");
-		if(!isConfirmed)
-		{
-			context.PreventNavigation();
-		}
 	}
 }

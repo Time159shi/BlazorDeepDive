@@ -1,5 +1,8 @@
 ﻿
 
+# 86.Use URL to pass info across routable component
+# 85.State Management Overview 状态管理
+# 84.Qurey Strings 查询字符串
 # 83.Option Parameter
 # 82.Multiple Page Directives 多个页面指令
 # 81.Use NavigatinLock t prevent navigation
