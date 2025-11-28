@@ -4,6 +4,7 @@
 @rendermode InteractiveServer
 @inject NavigationManager NavigationManager
 @inject TorontoOnlineServerStore TorontoOnlineServerStore
+@inject IServerEFCoreRepository ServerEFCoreRepository
 
 <h3>Servers</h3>
 <br />
@@ -67,7 +68,7 @@
 				StateHasChanged();
 			}
 			//初始化在线服务器数量
-			var serversToronto = ServersRepository.GetServersByCity("Toronto");
+			var serversToronto = ServerEFCoreRepository.GetServersByCity("Toronto");
 			if (serversToronto is not null)
 			{
 				TorontoOnlineServerStore.SetNumberServerOnline(serversToronto.Count(x => x.IsOnline));

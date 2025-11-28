@@ -4,6 +4,7 @@
 @inject IJSRuntime JSRuntime
 
 @inject NavigationManager NavigationManager
+@inject IServerEFCoreRepository ServerEFCoreRepository
 
 <NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation"
 	ConfirmExternalNavigation="true"></NavigationLock>
@@ -64,13 +65,13 @@
 	protected override void OnParametersSet()
 	{
 		//base.OnParametersSet();
-		server ??= ServersRepository.GetServerById(this.Id);
+		server ??= ServerEFCoreRepository.GetServerById(this.Id);
 	}
 	private void Submit()
 	{
 		if (server != null)
 		{
-			ServersRepository.UpdateServer(server.ServerId, server);
+			ServerEFCoreRepository.UpdateServer(server.ServerId, server);
 		}
 		// NavigationManager.NavigateTo("/servers");
 		NavigationManager.NavigateTo($"/servers/back_from/{this.server?.City}");

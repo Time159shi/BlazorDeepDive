@@ -1,5 +1,18 @@
 ﻿
 
+# Sqlserver sa akugi
+Add-Migration Init
+Update-Database Init
+# Accessing DB from Blzer SSR or Compoonent with Server Interactivity
+# Other Difference
+# Debug WebAssembly Components
+1.Debug with Visual Studio
+2.Debug with Browser
+3.Debug with Console.WriteLine
+# Use DI container to maintain states for WebAssemble Components
+# Browser Sturage & Javascript InterOp
+# WebAssembly
+# WebAssembly Interactivity Locations
 # Use Observer pattern to access states across component trees
 # Use DI container to maintain states
 # Use browser storage to maintain states

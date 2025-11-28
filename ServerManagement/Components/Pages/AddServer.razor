@@ -3,6 +3,7 @@
 @rendermode InteractiveServer
 
 @inject NavigationManager NavigationManager
+@inject IServerEFCoreRepository ServerEFCoreRepository
 
 <h3>Add Server</h3>
 <br />
@@ -56,7 +57,7 @@
 	{
 		if (Server != null)
 		{
-			ServersRepository.AddServer(Server);
+			ServerEFCoreRepository.AddServer(Server);
 			NavigationManager.NavigateTo($"/servers/back_from/{this.Server?.City}");
 		}
 		

@@ -1,15 +1,25 @@
+using Microsoft.EntityFrameworkCore;
 using ServerManagement.Components;
+using ServerManagement.Data;
+using ServerManagement.Models;
 using ServerManagement.StatesStore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContextFactory<ServerManagementContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ServerManagement"));
+});
+
 builder.Services.AddRazorComponents().
     AddInteractiveServerComponents();
 
 builder.Services.AddTransient<SessionStorage>();
 builder.Services.AddScoped<ContainerStorage>();//作用域生命周期
 builder.Services.AddScoped<TorontoOnlineServerStore>();
+
+builder.Services.AddTransient<IServerEFCoreRepository,ServerEFCoreRepository>();
 
 var app = builder.Build();
 
