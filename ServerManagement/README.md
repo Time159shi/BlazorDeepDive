@@ -1,5 +1,17 @@
 ﻿
 
+# How authentication scenarios
+1.Static Routing
+2.Server Interactive Routing
+3.WebAssembly Interactive Routing
+# Use Postman
+# Setu Firebase Realtime Database
+# How Web API works
+1.POST Create
+2.GET Read
+3.PUT/PATCH Write
+4.Delete Delete
+# Accessing DB from WebAssembly
 # Sqlserver sa akugi
 Add-Migration Init
 Update-Database Init
