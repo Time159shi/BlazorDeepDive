@@ -2,10 +2,9 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Security.BlazorSSR.Components.Account;
-using Security.BlazorSSR.Data;
-using ServerManagement.Components;
+using ServerManagement.Components.Account;
 using ServerManagement.Data;
+using ServerManagement.Components;
 using ServerManagement.Models;
 using ServerManagement.StatesStore;
 

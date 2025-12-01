@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
-using Security.BlazorSSR.Components.Account.Pages;
-using Security.BlazorSSR.Components.Account.Pages.Manage;
-using Security.BlazorSSR.Data;
+using ServerManagement.Components.Account.Pages;
+using ServerManagement.Components.Account.Pages.Manage;
+using ServerManagement.Data;
 using System.Security.Claims;
 using System.Text.Json;
 

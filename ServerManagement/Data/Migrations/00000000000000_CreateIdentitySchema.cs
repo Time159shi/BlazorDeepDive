@@ -3,7 +3,7 @@ using System;
 
 #nullable disable
 
-namespace Security.BlazorSSR.Migrations
+namespace ServerManagement.Migrations
 {
     /// <inheritdoc />
     public partial class CreateIdentitySchema : Migration
