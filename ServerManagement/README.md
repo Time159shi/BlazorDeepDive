@@ -1,5 +1,8 @@
 ﻿
 
+
+
+# Accessing the authentication ticket
 # How authentication scenarios
 1.Static Routing
 2.Server Interactive Routing

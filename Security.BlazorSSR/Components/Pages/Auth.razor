@@ -9,5 +9,15 @@
 <h1>You are authenticated</h1>
 
 <AuthorizeView>
-    Hello @context.User.Identity?.Name!
+	Hello @context.User.Identity?.Name!
+	@if (context.User.Claims is not null)
+	{
+		<ul>
+			@foreach(var claim in context.User.Claims)
+			{
+			<li>@claim.Type: @claim.Value</li>
+			}
+		</ul>
+		
+	}
 </AuthorizeView>
