@@ -1,7 +1,10 @@
 ﻿
 
 
-
+# What is Pre-Render and Why
+1.OnAfterRenderAsync
+2.
+3.UsePersistedState
 # Accessing the authentication ticket
 # How authentication scenarios
 1.Static Routing
